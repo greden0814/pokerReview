@@ -28,7 +28,25 @@
             "path" : "pages/addNewGame/addNewGame",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "设置牌局",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/flopPage/flopPage",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置翻牌",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/turnPage/turnPage",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置转排",
                 "enablePullDownRefresh": false
             }
             
