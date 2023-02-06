@@ -2,7 +2,7 @@
 	<view>
 		<button @click="addNewGame">新增牌局</button>
 		<scroll-view scroll-y="true" class="scroll-view">
-			<view v-for="item in list" @click="goDetails">{{item}}</view>
+			<view v-for="(item,index) in list" :key="index" @click="goDetails">{{item}}</view>
 		</scroll-view>
 	</view>
 </template>

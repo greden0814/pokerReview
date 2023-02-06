@@ -1,7 +1,7 @@
 <template>
 	<view class="addNewGame">
 		<view class="table">
-			<view class="seat" :class="'seat' + player.seat" v-for="player in players">
+			<view class="seat" :class="'seat' + player.seat" v-for="player in players" :key="player.seat">
 				<view class="cards">
 					<view class="card" @click="setCard(player.seat,0)">{{cardTypes[player.card[0].type]}}{{player.card[0].num}}</view>
 					<view class="card" @click="setCard(player.seat,1)">{{cardTypes[player.card[1].type]}}{{player.card[1].num}}</view>
@@ -11,13 +11,14 @@
 			</view>
 		</view>
 		<view class="cardTypeChosen" v-show="typeListVisible">
-			<cover-image class="cardType" v-for="item in [0,1,2,3]" :src="`../../static/image/${item}.png`" @click="choseType(item)"></cover-image>
+			<cover-image class="cardType" v-for="item in [0,1,2,3]" :key="item" :src="`../../static/image/${item}.png`" @click="choseType(item)"></cover-image>
 		</view>
 		<view class="cardNumChosen" v-show="numListVisible">
-			<view class="cardNum" :class="`cardNum${num}`" v-for="num in cardNum" @click="choseNum(num)">{{num}}</view>
+			<view class="cardNum" :class="`cardNum${num}`" v-for="num in cardNum" :key="num" @click="choseNum(num)">{{num}}</view>
 		</view>
 		<view class="operationBar">
 			<button @click="goFlop">设置翻牌</button>
+			<view style="color: red;" v-show="notFinish"> {{warningMsg}} </view>
 		</view>
 	</view>
 </template>
@@ -49,6 +50,9 @@
 				inputChips: false,
 				array: [{ name: '中国' }, { name: '美国' }, { name: '巴西' }, { name: '日本' }],
 				index: 2,
+				
+				notFinish: true,
+				warningMsg: "",
 			}
 		},
 		onReady() {
@@ -57,7 +61,7 @@
 					name: "张三",
 					seat: i,
 					status: "in",
-					chip: "10000",
+					chip: null,
 					card: [{type:"",num:""},{type:"",num:""}],
 					// inputChips: false,
 				})
@@ -78,14 +82,33 @@
 				this.settingSeat = seat
 				this.settingCard = index
 			},
-			startInputChips(player) {
-				player.inputChips = true
-			},
 				
 			goFlop() {
-				uni.navigateTo({
-					url: "/pages/flopPage/flopPage"
+				let playerCounts = 0
+				let notFinishMark = 0
+				this.players.forEach(p => {
+					if (p.card[0].type !== "" && p.card[0].num !== "" && p.card[1].type !== "" && p.card[1].num !== "" && p.chip !== null) {
+						playerCounts++
+					} else if (p.card[0].type === "" && p.card[0].num === "" && p.card[1].type === "" && p.card[1].num === "" && p.chip === null) {
+					} else {
+						notFinishMark++
+					}
 				})
+				if (playerCounts < 2) {
+					// this.notFinish = true
+					this.warningMsg = "牌局人数过少"
+					return
+				} else if (notFinishMark > 0) {
+					// this.notFinish = true
+					this.warningMsg = "请补全信息"
+					return
+				} else {
+					this.warningMsg = ""
+					// this.notFinish = false
+					uni.navigateTo({
+						url: `/pages/flopPage/flopPage?num=${playerCounts}`
+					})
+				}
 			}
 		}
 	}

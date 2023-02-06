@@ -1,7 +1,7 @@
 <template>
 	<view class="gameDetails">
 		<view class="table">
-			<view class="seat" :class="'seat' + seat.seat" v-for="seat in players">
+			<view class="seat" :class="'seat' + seat.seat" v-for="seat in players" :key="seat.seat">
 				<view class="cards">
 					<view class="">{{cardType[seat.card[0].type]}}{{seat.card[0].num}}</view>
 					<view class="">{{cardType[seat.card[1].type]}}{{seat.card[1].num}}</view>
@@ -15,7 +15,7 @@
 		</view>
 		<view class="operationBar">
 			<view class="btnList">
-				<button @click="stepBack">后退</button>
+				<button @click="stepBack">后�</button>
 				<button @click="stepForward">前进</button>
 			</view>
 			<!-- <progress percent="0" show-info /> -->
