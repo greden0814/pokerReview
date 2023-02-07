@@ -1,0 +1,30 @@
+
+.index {
+	background-color: #FBF9FE;
+	font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+	flex: 1;
+	min-height: 100%;
+	font-size: 32rpx;
+}
+.headerTab {
+	display: flex;
+	justify-content: center;
+	height: 2rem;
+	line-height: 2rem;
+}
+.headerTab .switchTab {
+	margin: 0 .5rem;
+	width: 2rem;
+}
+.pageTab {
+	margin-bottom: 5px;
+}
+.pageTab .switchTab {
+	margin: 0 .5rem;
+	width: 2rem;
+	font-size: small;
+}
+.switchTab.active {
+	border-bottom: 3px solid red
+}
+
