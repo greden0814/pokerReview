@@ -1,0 +1,63 @@
+.flopPage .flopCards {
+  display: flex;
+  height: 60px;
+}
+.flopPage .flopCards .card {
+  border: 1px solid #000;
+  width: 40px;
+  margin-right: 3px;
+}
+.flopPage .steps .choiceGroup {
+  display: flex;
+}
+.flopPage .steps .choiceGroup .btnPrimary {
+  color: #fff;
+  background-color: #007aff;
+}
+.flopPage .steps .choiceGroup .bidInput {
+  margin-left: 10px;
+  width: 100px;
+  height: 2.4em;
+}
+.flopPage .cardTypeChosen {
+  position: absolute;
+  display: flex;
+  width: 220px;
+  height: 200px;
+  left: calc(50% - 100px);
+  flex-wrap: wrap;
+  top: calc(50% - 150px);
+}
+.flopPage .cardTypeChosen .cardType {
+  width: 80px;
+  margin: 10px;
+  height: 90px;
+}
+.flopPage .cardNumChosen {
+  position: absolute;
+  display: flex;
+  width: 220px;
+  height: 200px;
+  left: calc(50% - 93px);
+  flex-wrap: wrap;
+  top: calc(50% - 258px);
+}
+.flopPage .cardNumChosen .cardNum {
+  width: 40px;
+  margin: 10px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid #000;
+}
+.flopPage .cardNumChosen .cardNum1,
+.flopPage .cardNumChosen .cardNum12 {
+  margin-left: 40px;
+  margin-right: 20px;
+}
+.flopPage .cardNumChosen .cardNum2,
+.flopPage .cardNumChosen .cardNum13 {
+  margin-left: 4px;
+  margin-right: 20px;
+}
+
