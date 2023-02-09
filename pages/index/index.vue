@@ -4,16 +4,16 @@
 			<text :key='index' v-for="(item,index) in topNavList" class="switchTab" user-select='true'
 				:class="topNavIdx==index ? 'active' : ''" @click="switchTab" :data-index="index">{{item}}</text>
 		</view> -->
-		<swiper class="swiper">
+		<!-- <swiper class="swiper">
 			<swiper-item>
 					关注
 			</swiper-item>
 			<swiper-item>
 					推荐
 			</swiper-item>
-		</swiper>
-		<navigator url="../games/games">跳转到牌局回放功能</navigator>
-		<view class="pageTab">
+		</swiper> -->
+		<navigator class="navi" url="../games/games">牌局回放</navigator>
+		<!-- <view class="pageTab">
 			<text :key='index' v-for="(item,index) in pageNavList" class="switchTab" user-select='true'
 				:class="pageNavIdx==index ? 'active' : ''" @click="switchPageTab" :data-index="index">{{item}}</text>
 		</view>
@@ -21,7 +21,7 @@
 			<view v-for="(item,index) in lists" :key="index">
 				<image :src="item.imgUrl" ></image>
 			</view>
-		</view> 
+		</view> -->
 	</view>
 </template>
    
@@ -66,7 +66,19 @@
 		min-height: 100%;
 		font-size: 32rpx;
 	}
-
+	.content {
+		display: flex;
+		height: 346px;
+		align-items: center;
+		justify-content: center;
+	}
+	.navi {
+		width: 200px;
+		height: 100px;
+    text-align: center;
+    line-height: 100px;
+		border: 1px solid #000;
+	}
 	.headerTab {
 		display: flex;
 		justify-content: center;

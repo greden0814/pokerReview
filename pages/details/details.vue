@@ -3,8 +3,8 @@
 		<view class="table">
 			<view class="seat" :class="'seat' + seat.seat" v-for="seat in players" :key="seat.seat">
 				<view class="cards">
-					<view class="">{{cardType[seat.card[0].type]}}{{seat.card[0].num}}</view>
-					<view class="">{{cardType[seat.card[1].type]}}{{seat.card[1].num}}</view>
+					<view class="card">{{cardType[seat.card[0].type]}}{{seat.card[0].num}}</view>
+					<view class="card">{{cardType[seat.card[1].type]}}{{seat.card[1].num}}</view>
 				</view>
 				{{seat.chip}}
 				<view class="isBB" v-if="seat.seat == bbseat">bb</view>
@@ -15,8 +15,9 @@
 		</view>
 		<view class="operationBar">
 			<view class="btnList">
-				<button @click="stepBack">ÂêéÈ</button>
-				<button @click="stepForward">ÂâçËøõ</button>
+				<button plain @click="checkMoves">≤Èø¥º«¬º</button>
+				<button @click="stepBack">back</button>
+				<button @click="stepForward">forward</button>
 			</view>
 			<!-- <progress percent="0" show-info /> -->
 		</view>
@@ -70,8 +71,9 @@
 		justify-content: flex-end;
 
 		.table {
-			height: 674px;
+			height: 346px;
 			background-image: url("../../static/image/table.png");
+			background-repeat: no-repeat;
 			.currentOperation {
 				position: absolute;
 				left: 50%;
@@ -79,42 +81,74 @@
 			}
 			.seat {
 				width: 80px;
-				height: 60px;
+				height: 80px;
 				position: absolute;
 
 				.cards {
-					border: 1px solid #ccc;
 					display: flex;
+					height: 60px;
+					.card {
+						border: 1px solid #000;
+						width: 40px;
+						margin-right: 3px;
+					}
 				}
 
 				.isBB {}
 			}
 
 			.seat0 {
-				left: calc(50% - 40px);
+				left: 30%;
 				top: 20px;
 			}
-
+			
 			.seat1 {
-				right: 5px;
-				top: 180px;
+				right: 37%;
+				top: 20px;
 			}
-
+			
 			.seat2 {
-				right: 5px;
-				top: 300px;
+				right: 13%;
+				top: 50px;
 			}
-
+			
 			.seat3 {
-				right: 5px;
-				top: 420px;
+				right: 13%;
+				bottom: 20px;
 			}
+			.seat4 {
+				right: 30%;
+				bottom: 6px;
+			}
+			.seat5 {
+				left: 43%;
+				bottom: 6px;
+			}
+			.seat6 {
+				left: 25%;
+				bottom: 6px;
+			}
+			.seat7 {
+				left: 6%;
+				bottom: 20px;
+			}
+			.seat8 {
+				left: 6%;
+				top: 65px;
+			}
+			
 		}
 
 		.operationBar {
+			position: absolute;
+			right: 10px;
+			top: 43%;
 			.btnList {
 				display: flex;
-
+				flex-direction: column;
+				button {
+					font-size: 12px;
+				}
 			}
 		}
 	}

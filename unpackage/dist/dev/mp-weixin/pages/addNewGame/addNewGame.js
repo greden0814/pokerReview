@@ -193,7 +193,7 @@ var _default = {
       value: [],
       cardTypes: _data2.default.cardType,
       // cardTypePics: data.cardTypePics,
-      cardNum: _data2.default.cardNum,
+      cardNumList: null,
       indicatorStyle: "height: 50px;",
       settingSeat: 0,
       settingCard: 0,
@@ -210,11 +210,13 @@ var _default = {
       }],
       index: 2,
       notFinish: true,
-      warningMsg: ""
+      warningMsg: "",
+      exileCardList: [[], [], [], []]
     };
   },
   onReady: function onReady() {
-    for (var i = 0; i < 8; i++) {
+    this.initCardNumList();
+    for (var i = 0; i < 9; i++) {
       this.players.push({
         name: "张三",
         seat: i,
@@ -233,13 +235,31 @@ var _default = {
   },
 
   methods: {
+    initCardNumList: function initCardNumList() {
+      this.cardNumList = _data2.default.cardNum.map(function (num) {
+        return {
+          num: num,
+          exile: ""
+        };
+      });
+    },
     choseType: function choseType(type) {
       this.typeListVisible = false;
       this.numListVisible = true;
+      this.initCardNumList();
+      for (var i = 0; i < this.exileCardList[type].length; i++) {
+        this.cardNumList[this.exileCardList[type][i]].exile = "exiled";
+      }
       this.chosenType = type;
     },
-    choseNum: function choseNum(num) {
+    choseNum: function choseNum(num, exile) {
+      if (exile == 'exiled') return;
       this.$set(this.players[this.settingSeat].card, this.settingCard, {
+        type: this.chosenType,
+        num: num
+      });
+      //设置牌局中被选过的牌
+      this.exileCard({
         type: this.chosenType,
         num: num
       });
@@ -250,6 +270,10 @@ var _default = {
       this.settingSeat = seat;
       this.settingCard = index;
     },
+    exileCard: function exileCard(card) {
+      this.exileCardList[card.type].push(card.num);
+    },
+    checkMoves: function checkMoves() {},
     goFlop: function goFlop() {
       var playerCounts = 0;
       var notFinishMark = 0;

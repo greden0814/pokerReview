@@ -12,6 +12,7 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
+    "pageOrientation": "landscape",
     "backgroundColor": "#F8F8F8"
   },
   "permission": {},

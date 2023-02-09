@@ -17,7 +17,7 @@
 			<view class="cardNum" :class="'cardNum' + card.num + card.exile" v-for="card in cardNumList" :key="card.num" @click="choseNum(card.num,card.exile)">{{card.num}}</view>
 		</view>
 		<view class="operationBar">
-			<button plain @click="goFlop">设置翻牌</button>
+			<button plain @click="checkMoves">查看记录</button>
 			<view style="color: red;font-size: 12px;" v-show="notFinish"> {{warningMsg}} </view>
 		</view>
 	</view>
@@ -99,6 +99,9 @@
 			},
 			exileCard(card) {
 				this.exileCardList[card.type].push(card.num)
+			},
+			checkMoves() {
+				
 			},
 			goFlop() {
 				let playerCounts = 0
