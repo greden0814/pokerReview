@@ -1,24 +1,24 @@
 <template>
 	<view class="addNewGame">
-		<view class="table">
+		<view class="table" :style="'height:'+ windowHeight + 'px;width:' + screenWidth + 'px'">
 			<view class="seat" :class="'seat' + player.seat" v-for="player in players" :key="player.seat">
 				<view class="cards">
-					<view class="card" @click="setCard(player.seat,0)">{{cardTypes[player.card[0].type]}}{{player.card[0].num}}</view>
-					<view class="card" @click="setCard(player.seat,1)">{{cardTypes[player.card[1].type]}}{{player.card[1].num}}</view>
+					<view class="card" @click="setCard(player.seat,0)">{{cardTypes(player.card[0].type)}}{{player.card[0].num}}</view>
+					<view class="card" @click="setCard(player.seat,1)">{{cardTypes(player.card[1].type)}}{{player.card[1].num}}</view>
 				</view>
-				<input class="" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8"/>
+				<input class="chips" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8"/>
 				<view class="isBB" v-if="player.seat == bbseat">bb</view>
 			</view>
 		</view>
-		<view class="cardTypeChosen" v-show="typeListVisible">
+		<view class="cardTypeChosen" v-if="typeListVisible">
 			<cover-image class="cardType" v-for="item in [0,1,2,3]" :key="item" :src="`../../static/image/${item}.png`" @click="choseType(item)"></cover-image>
 		</view>
-		<view class="cardNumChosen" v-show="numListVisible">
+		<view class="cardNumChosen" v-if="numListVisible">
 			<view class="cardNum" :class="'cardNum' + card.num + card.exile" v-for="card in cardNumList" :key="card.num" @click="choseNum(card.num,card.exile)">{{card.num}}</view>
 		</view>
 		<view class="operationBar">
 			<button plain @click="checkMoves">查看记录</button>
-			<view style="color: red;font-size: 12px;" v-show="notFinish"> {{warningMsg}} </view>
+			<view style="color: red;font-size: 12px;" v-if="notFinish"> {{warningMsg}} </view>
 		</view>
 	</view>
 </template>
@@ -39,7 +39,7 @@
 				typeListVisible: false,
 				numListVisible: false,
 				value: [],
-				cardTypes: data.cardType,
+				cardTypes: data.getCardType,
 				// cardTypePics: data.cardTypePics,
 				cardNumList: null,
         indicatorStyle: `height: 50px;`,
@@ -54,7 +54,10 @@
 				notFinish: true,
 				warningMsg: "",
 				
-				exileCardList: [[],[],[],[]]
+				exileCardList: [[],[],[],[]],
+				
+				windowHeight: 0,
+				screenWidth: 0,
 			}
 		},
 		onReady() {
@@ -69,6 +72,9 @@
 					// inputChips: false,
 				})
 			}
+			this.windowHeight = wx.getSystemInfoSync().windowHeight
+			this.screenWidth = wx.getSystemInfoSync().screenWidth
+			console.log(wx.getSystemInfoSync());
 		},
 		methods: {
 			initCardNumList() {
@@ -142,77 +148,81 @@
 		justify-content: flex-end;
 
 		.table {
-			height: 346px;
+			// height: 308rpx;
+			// width: 750rpx;
 			background-image: url("../../static/image/table.png");
+			background-size: cover;
 			background-repeat: no-repeat;
 			.seat {
-				width: 80px;
-				height: 80px;
+				// width: 80px;
+				height: 70rpx;
 				position: absolute;
 			
 				.cards {
-					// border: 1px solid #000;
 					display: flex;
-					height: 60px;
+					height: 50rpx;
 					.card {
 						border: 1px solid #000;
-						width: 40px;
-						margin-right: 3px;
+						width: 35rpx;
+						margin-right: 3rpx;
 					}
 				}
-			
+				.chips {
+					width: 73rpx;
+					font-size: 12rpx;
+				}
 				.isBB {}
 			}
 			
 			.seat0 {
-				left: 30%;
-				top: 20px;
+				left: 28%;
+				top: 20rpx;
 			}
 			
 			.seat1 {
 				right: 37%;
-				top: 20px;
+				top: 20rpx;
 			}
 			
 			.seat2 {
 				right: 13%;
-				top: 50px;
+				top: 50rpx;
 			}
 			
 			.seat3 {
 				right: 13%;
-				bottom: 20px;
+				bottom: 20rpx;
 			}
 			.seat4 {
 				right: 30%;
-				bottom: 6px;
+				bottom: 6rpx;
 			}
 			.seat5 {
 				left: 43%;
-				bottom: 6px;
+				bottom: 6rpx;
 			}
 			.seat6 {
 				left: 25%;
-				bottom: 6px;
+				bottom: 6rpx;
 			}
 			.seat7 {
-				left: 6%;
-				bottom: 20px;
+				left: 8%;
+				bottom: 20rpx;
 			}
 			.seat8 {
-				left: 6%;
-				top: 65px;
+				left: 8%;
+				top: 50rpx;
 			}
 			
 		}
 		.cardTypeChosen {
 			position: absolute;			
 			display: flex;
-			width: 400px;
-			height: 80px;
-			left: calc(50% - 223px);
+			width: 400rpx;
+			height: 80rpx;
+			left: 20%;
 			flex-wrap: wrap;
-			top: calc(50% - 42px);
+			top: 37%;
 			.cardType {
 				flex: 1;
 				margin: 10px;

@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(wx) {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
@@ -184,18 +184,23 @@ var _default = {
       river: _gameData.default.river,
       compare: _gameData.default.compare,
       cardType: _data2.default.cardType,
-      playerCount: 0
+      playerCount: 0,
+      windowHeight: 0,
+      screenWidth: 0
     };
   },
   onReady: function onReady() {
-    console.log(this.players);
+    // console.log(this.players);
     this.playerCount = this.players.length;
+    this.windowHeight = wx.getSystemInfoSync().windowHeight;
+    this.screenWidth = wx.getSystemInfoSync().screenWidth;
     // for (let i = 0; i < this.players.length; i++) {
 
     // }
   },
 
   methods: {
+    checkMoves: function checkMoves() {},
     stepBack: function stepBack() {},
     stepForward: function stepForward() {
       if (steps < perflop.length) {}
@@ -203,6 +208,7 @@ var _default = {
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"]))
 
 /***/ }),
 

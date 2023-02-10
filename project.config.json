@@ -1,4 +1,6 @@
 {
+	"miniprogramRoot": "./unpackage/dist/dev/mp-weixin",
+	"srcminiprogramRoot": "./unpackage/dist/dev/mp-weixin",
   "description": "项目配置文件",
   "packOptions": {
     "ignore": []

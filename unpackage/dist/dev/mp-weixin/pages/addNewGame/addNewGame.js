@@ -102,6 +102,16 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.players, function (player, __i0__) {
+    var $orig = _vm.__get_orig(player)
+    var m0 = _vm.cardTypes(player.card[0].type)
+    var m1 = _vm.cardTypes(player.card[1].type)
+    return {
+      $orig: $orig,
+      m0: m0,
+      m1: m1,
+    }
+  })
   if (!_vm._isMounted) {
     _vm.e0 = function ($event, item) {
       var _temp = arguments[arguments.length - 1].currentTarget.dataset,
@@ -111,6 +121,14 @@ var render = function () {
       return _vm.choseType(item)
     }
   }
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -144,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
+/* WEBPACK VAR INJECTION */(function(wx, uni) {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
@@ -191,7 +209,7 @@ var _default = {
       typeListVisible: false,
       numListVisible: false,
       value: [],
-      cardTypes: _data2.default.cardType,
+      cardTypes: _data2.default.getCardType,
       // cardTypePics: data.cardTypePics,
       cardNumList: null,
       indicatorStyle: "height: 50px;",
@@ -211,7 +229,9 @@ var _default = {
       index: 2,
       notFinish: true,
       warningMsg: "",
-      exileCardList: [[], [], [], []]
+      exileCardList: [[], [], [], []],
+      windowHeight: 0,
+      screenWidth: 0
     };
   },
   onReady: function onReady() {
@@ -232,8 +252,11 @@ var _default = {
         // inputChips: false,
       });
     }
-  },
 
+    this.windowHeight = wx.getSystemInfoSync().windowHeight;
+    this.screenWidth = wx.getSystemInfoSync().screenWidth;
+    console.log(wx.getSystemInfoSync());
+  },
   methods: {
     initCardNumList: function initCardNumList() {
       this.cardNumList = _data2.default.cardNum.map(function (num) {
@@ -303,7 +326,7 @@ var _default = {
   }
 };
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 
