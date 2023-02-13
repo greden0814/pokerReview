@@ -21,6 +21,9 @@
   width: 35rpx;
   margin-right: 3rpx;
 }
+.addNewGame .table .seat .cards .isChecked {
+  border: 1px solid yellow;
+}
 .addNewGame .table .seat .chips {
   width: 73rpx;
   font-size: 12rpx;

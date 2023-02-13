@@ -102,22 +102,35 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.players, function (player, __i0__) {
+  var l1 = _vm.__map(_vm.players, function (player, __i0__) {
     var $orig = _vm.__get_orig(player)
-    var m0 = _vm.cardTypes(player.card[0].type)
-    var m1 = _vm.cardTypes(player.card[1].type)
+    var l0 = _vm.__map([0, 1], function (idx, __i1__) {
+      var $orig = _vm.__get_orig(idx)
+      var m0 = _vm.cardTypes(player.card[idx].type)
+      return {
+        $orig: $orig,
+        m0: m0,
+      }
+    })
     return {
       $orig: $orig,
-      m0: m0,
-      m1: m1,
+      l0: l0,
     }
   })
   if (!_vm._isMounted) {
-    _vm.e0 = function ($event, item) {
+    _vm.e0 = function ($event, player, idx) {
       var _temp = arguments[arguments.length - 1].currentTarget.dataset,
         _temp2 = _temp.eventParams || _temp["event-params"],
-        item = _temp2.item
+        player = _temp2.player,
+        idx = _temp2.idx
       var _temp, _temp2
+      return _vm.setCard(player.seat, idx)
+    }
+    _vm.e1 = function ($event, item) {
+      var _temp3 = arguments[arguments.length - 1].currentTarget.dataset,
+        _temp4 = _temp3.eventParams || _temp3["event-params"],
+        item = _temp4.item
+      var _temp3, _temp4
       return _vm.choseType(item)
     }
   }
@@ -125,7 +138,7 @@ var render = function () {
     {},
     {
       $root: {
-        l0: l0,
+        l1: l1,
       },
     }
   )
@@ -195,6 +208,8 @@ var _data2 = _interopRequireDefault(__webpack_require__(/*! @/static/data/data.j
 //
 //
 //
+//
+//
 var _default = {
   data: function data() {
     return {
@@ -206,6 +221,7 @@ var _default = {
       turn: [],
       river: [],
       compare: [],
+      choosingLock: false,
       typeListVisible: false,
       numListVisible: false,
       value: [],
@@ -216,6 +232,7 @@ var _default = {
       settingSeat: 0,
       settingCard: 0,
       chosenType: 0,
+      checkedSeat: null,
       inputChips: false,
       array: [{
         name: '中国'
@@ -255,8 +272,9 @@ var _default = {
 
     this.windowHeight = wx.getSystemInfoSync().windowHeight;
     this.screenWidth = wx.getSystemInfoSync().screenWidth;
-    console.log(wx.getSystemInfoSync());
+    // console.log(wx.getSystemInfoSync());
   },
+
   methods: {
     initCardNumList: function initCardNumList() {
       this.cardNumList = _data2.default.cardNum.map(function (num) {
@@ -271,7 +289,7 @@ var _default = {
       this.numListVisible = true;
       this.initCardNumList();
       for (var i = 0; i < this.exileCardList[type].length; i++) {
-        this.cardNumList[this.exileCardList[type][i]].exile = "exiled";
+        this.cardNumList[this.exileCardList[type][i] - 1].exile = "exiled";
       }
       this.chosenType = type;
     },
@@ -287,9 +305,15 @@ var _default = {
         num: num
       });
       this.numListVisible = false;
+      this.choosingLock = false;
+      this.checkedSeat = null;
     },
     setCard: function setCard(seat, index) {
+      if (this.choosingLock) return;
+      this.choosingLock = true;
       this.typeListVisible = true;
+      this.checkedSeat = '' + seat + index;
+      console.log(this.checkedSeat);
       this.settingSeat = seat;
       this.settingCard = index;
     },

@@ -15,9 +15,9 @@
 		</view>
 		<view class="operationBar">
 			<view class="btnList">
-				<button @click="checkMoves">查看记录</button>
-				<button @click="stepBack">后退</button>
-				<button @click="stepForward">前进</button>
+				<button @click="checkMoves">鏌ョ湅杩涘害</button>
+				<button @click="stepBack">鍚庨��</button>
+				<button @click="stepForward">鍓嶈繘</button>
 			</view>
 			<!-- <progress percent="0" show-info /> -->
 		</view>
