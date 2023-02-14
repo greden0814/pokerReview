@@ -2,11 +2,12 @@
 	<view class="addNewGame">
 		<view class="table" :style="'height:'+ windowHeight + 'px;width:' + screenWidth + 'px'">
 			<view class="seat" :class="'seat' + player.seat" v-for="player in players" :key="player.seat">
-				<view class="cards">
+				<view class="cards" @click="setMoves">
 					<view class="card" :class="checkedSeat == '' + player.seat + idx ? 'isChecked' : ''" @click="setCard(player.seat,idx)" v-for="idx in [0,1]" :key="idx">
 						{{cardTypes(player.card[idx].type)}}{{player.card[idx].num}}</view>
 				</view>
-				<input class="chips" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8" />
+				<input class="chips" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8" v-if="step == 0" />
+				<view v-else>{{player.chip}}</view>
 				<view class="isBB" v-if="player.seat == bbseat">bb</view>
 			</view>
 		</view>
@@ -18,8 +19,22 @@
 			<view class="cardNum" :class="'cardNum' + card.num + ' ' + card.exile" v-for="card in cardNumList"
 				:key="card.num" @click="choseNum(card.num,card.exile)">{{card.num}}</view>
 		</view>
+		<movable-area :scale-area="true" class="movableArea" v-if="showDetail">
+			<movable-view direction="all" x="260rpx" y="100rpx" class="detailDialog">
+				<view class="detailHeader">
+					<view class="title">操作记录</view>
+					<view class="close" @click="closeDetails">X</view>
+				</view>
+				<view class="detailList">
+					<scroll-view scroll-y="true" class="scroll-Y">
+						<view class="">A</view>
+					</scroll-view>
+				</view>
+			</movable-view>
+		</movable-area>
 		<view class="operationBar">
 			<button plain @click="checkMoves">查看记录</button>
+			<button plain @click="goFlop">配置转牌</button>
 			<view style="color: red;font-size: 12px;" v-if="notFinish"> {{warningMsg}} </view>
 		</view>
 	</view>
@@ -30,6 +45,7 @@
 	export default {
 		data() {
 			return {
+				step: 1,
 				bb: 100,
 				bbseat: null,
 				players: [],
@@ -75,6 +91,8 @@
 
 				windowHeight: 0,
 				screenWidth: 0,
+				
+				showDetail: false,
 			}
 		},
 		onReady() {
@@ -134,19 +152,29 @@
 			},
 			setCard(seat, index) {
 				if (this.choosingLock) return
+				if (this.step > 0) return
+				console.log("setCard");
 				this.choosingLock = true
 				this.typeListVisible = true
-				this.checkedSeat = '' + seat + index 
-				console.log(this.checkedSeat);
+				this.checkedSeat = '' + seat + index
 				this.settingSeat = seat
 				this.settingCard = index
+			},
+			setMoves() {
+				if (this.step > 0) {
+					console.log("setMoves");
+				}
 			},
 			exileCard(card) {
 				this.exileCardList[card.type].push(card.num)
 			},
 			checkMoves() {
-
+				this.showDetail = true
 			},
+			closeDetails() {
+				this.showDetail = false
+			},
+			
 			goFlop() {
 				let playerCounts = 0
 				let notFinishMark = 0
@@ -169,10 +197,11 @@
 					return
 				} else {
 					this.warningMsg = ""
-					// this.notFinish = false
-					uni.navigateTo({
-						url: `/pages/flopPage/flopPage?num=${playerCounts}`
-					})
+					this.notFinish = false
+					this.step++
+					// uni.navigateTo({
+					// 	url: `/pages/flopPage/flopPage?num=${playerCounts}`
+					// })
 				}
 			}
 		}
@@ -205,6 +234,8 @@
 					.card {
 						border: 1px solid #000;
 						width: 35rpx;
+						text-align: center;
+						line-height: 20rpx;
 						margin-right: 3rpx;
 					}
 					
@@ -271,38 +302,40 @@
 		.cardTypeChosen {
 			position: absolute;
 			display: flex;
-			width: 400rpx;
+			width: 370rpx;
 			height: 80rpx;
-			left: 20%;
+			left: 170rpx;
 			flex-wrap: wrap;
-			top: 37%;
+			// top: 39%;
+			top: 121rpx;
 
 			.cardType {
 				flex: 1;
-				margin: 10px;
+				height: 80rpx;
+				margin-right: 10rpx;
 			}
 		}
 
 		.cardNumChosen {
 			position: absolute;
 			display: flex;
-			width: 400px;
-			height: 144px;
-			left: calc(50% - 208px);
+			width: 400rpx;
+			height: 120rpx;
+			left: 184rpx;
 			flex-wrap: wrap;
-			top: calc(50% - 60px);
+			top: 106rpx;
 
 			.cardNum {
-				width: 40px;
-				height: 55px;
-				margin: 5px;
+				width: 35rpx;
+				height: 50rpx;
+				margin-right: 15rpx;
 				text-align: center;
-				line-height: 60px;
+				line-height: 50rpx;
 				border: 1px solid #000;
 			}
 
 			.cardNum8 {
-				margin-left: 30px;
+				margin-left: 25rpx;
 			}
 
 			.exiled {
@@ -311,7 +344,27 @@
 				cursor: default;
 			}
 		}
-
+		.movableArea {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			.detailDialog {
+				height: 200rpx;
+				width: 400rpx;
+				border: 1px solid #000;
+				background: rgba(1, 2, 3, .7);
+				.detailHeader {
+					display: flex;
+						color: aliceblue;
+					.title {
+						width: calc(100% - 16rpx);
+					}
+					.close {
+						width: 14rpx;
+					}
+				}
+			}
+		}
 		.operationBar {
 			position: absolute;
 			right: 10px;
