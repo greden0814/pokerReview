@@ -7,7 +7,7 @@
 						{{cardTypes(player.card[idx].type)}}{{player.card[idx].num}}</view>
 				</view>
 				<input class="chips" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8" v-if="step == 0" />
-				<view v-else>{{player.chip}}</view>
+				<view class="chips" v-else>{{player.chip}}</view>
 				<view class="isBB" v-if="player.seat == bbseat">bb</view>
 			</view>
 		</view>
@@ -34,7 +34,7 @@
 		</movable-area>
 		<view class="operationBar">
 			<button plain @click="checkMoves">查看记录</button>
-			<button plain @click="goFlop">配置转牌</button>
+			<button plain @click="goFlop">配置翻牌</button>
 			<view style="color: red;font-size: 12px;" v-if="notFinish"> {{warningMsg}} </view>
 		</view>
 	</view>
@@ -45,7 +45,7 @@
 	export default {
 		data() {
 			return {
-				step: 1,
+				step: 0,
 				bb: 100,
 				bbseat: null,
 				players: [],
@@ -199,6 +199,7 @@
 					this.warningMsg = ""
 					this.notFinish = false
 					this.step++
+					console.log(JSON.stringify(this.players));
 					// uni.navigateTo({
 					// 	url: `/pages/flopPage/flopPage?num=${playerCounts}`
 					// })
