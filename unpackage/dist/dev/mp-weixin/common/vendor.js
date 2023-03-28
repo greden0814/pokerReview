@@ -1524,7 +1524,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8878,7 +8878,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8899,14 +8899,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9002,7 +9002,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_DARK_MODE":"false","VUE_APP_NAME":"pokerReview","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9624,52 +9624,112 @@ exports.default = void 0;
 var gameData = {
   bb: 2,
   players: [{
-    name: "张三",
-    seat: 0,
-    status: "in",
-    chip: "10000",
-    card: [{
-      type: 0,
-      num: 2
+    "name": "张三",
+    "seat": 0,
+    "status": "in",
+    "chip": "10000",
+    "card": [{
+      "type": 0,
+      "num": 1
     }, {
-      type: 1,
-      num: 7
+      "type": 1,
+      "num": 4
     }]
   }, {
-    name: "李四",
-    seat: 1,
-    status: "in",
-    chip: "11000",
-    card: [{
-      type: 2,
-      num: 8
+    "name": "张三",
+    "seat": 1,
+    "status": "in",
+    "chip": "11000",
+    "card": [{
+      "type": 2,
+      "num": 12
     }, {
-      type: 3,
-      num: 11
+      "type": 2,
+      "num": 2
     }]
   }, {
-    name: "王五",
-    seat: 2,
-    status: "in",
-    chip: "12000",
-    card: [{
-      type: 3,
-      num: 1
+    "name": "张三",
+    "seat": 2,
+    "status": "in",
+    "chip": "12000",
+    "card": [{
+      "type": 3,
+      "num": 4
     }, {
-      type: 2,
-      num: 7
+      "type": 1,
+      "num": 10
     }]
   }, {
-    name: "赵六",
-    seat: 3,
-    status: "in",
-    chip: "13000",
-    card: [{
-      type: 2,
-      num: 5
+    "name": "张三",
+    "seat": 3,
+    "status": "in",
+    "chip": "13000",
+    "card": [{
+      "type": 0,
+      "num": 3
     }, {
-      type: 3,
-      num: 7
+      "type": 1,
+      "num": 12
+    }]
+  }, {
+    "name": "张三",
+    "seat": 4,
+    "status": "in",
+    "chip": "14000",
+    "card": [{
+      "type": 2,
+      "num": 5
+    }, {
+      "type": 3,
+      "num": 9
+    }]
+  }, {
+    "name": "张三",
+    "seat": 5,
+    "status": "in",
+    "chip": "15000",
+    "card": [{
+      "type": 1,
+      "num": 2
+    }, {
+      "type": 2,
+      "num": 6
+    }]
+  }, {
+    "name": "张三",
+    "seat": 6,
+    "status": "in",
+    "chip": "16000",
+    "card": [{
+      "type": 2,
+      "num": 13
+    }, {
+      "type": 3,
+      "num": 12
+    }]
+  }, {
+    "name": "张三",
+    "seat": 7,
+    "status": "in",
+    "chip": "17000",
+    "card": [{
+      "type": 2,
+      "num": 4
+    }, {
+      "type": 3,
+      "num": 11
+    }]
+  }, {
+    "name": "张三",
+    "seat": 8,
+    "status": "in",
+    "chip": "18000",
+    "card": [{
+      "type": 1,
+      "num": 1
+    }, {
+      "type": 2,
+      "num": 10
     }]
   }],
   perflop: [100, 100, 100, 100],

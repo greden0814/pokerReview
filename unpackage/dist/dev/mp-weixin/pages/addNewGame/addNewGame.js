@@ -175,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(wx, uni) {
+/* WEBPACK VAR INJECTION */(function(wx) {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
@@ -210,9 +210,25 @@ var _data2 = _interopRequireDefault(__webpack_require__(/*! @/static/data/data.j
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
     return {
+      step: 0,
       bb: 100,
       bbseat: null,
       players: [],
@@ -248,7 +264,8 @@ var _default = {
       warningMsg: "",
       exileCardList: [[], [], [], []],
       windowHeight: 0,
-      screenWidth: 0
+      screenWidth: 0,
+      showDetail: false
     };
   },
   onReady: function onReady() {
@@ -310,17 +327,28 @@ var _default = {
     },
     setCard: function setCard(seat, index) {
       if (this.choosingLock) return;
+      if (this.step > 0) return;
+      console.log("setCard");
       this.choosingLock = true;
       this.typeListVisible = true;
       this.checkedSeat = '' + seat + index;
-      console.log(this.checkedSeat);
       this.settingSeat = seat;
       this.settingCard = index;
+    },
+    setMoves: function setMoves() {
+      if (this.step > 0) {
+        console.log("setMoves");
+      }
     },
     exileCard: function exileCard(card) {
       this.exileCardList[card.type].push(card.num);
     },
-    checkMoves: function checkMoves() {},
+    checkMoves: function checkMoves() {
+      this.showDetail = true;
+    },
+    closeDetails: function closeDetails() {
+      this.showDetail = false;
+    },
     goFlop: function goFlop() {
       var playerCounts = 0;
       var notFinishMark = 0;
@@ -341,16 +369,18 @@ var _default = {
         return;
       } else {
         this.warningMsg = "";
-        // this.notFinish = false
-        uni.navigateTo({
-          url: "/pages/flopPage/flopPage?num=".concat(playerCounts)
-        });
+        this.notFinish = false;
+        this.step++;
+        console.log(JSON.stringify(this.players));
+        // uni.navigateTo({
+        // 	url: `/pages/flopPage/flopPage?num=${playerCounts}`
+        // })
       }
     }
   }
 };
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"]))
 
 /***/ }),
 

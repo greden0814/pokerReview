@@ -19,6 +19,8 @@
 .addNewGame .table .seat .cards .card {
   border: 1px solid #000;
   width: 35rpx;
+  text-align: center;
+  line-height: 20rpx;
   margin-right: 3rpx;
 }
 .addNewGame .table .seat .cards .isChecked {
@@ -67,40 +69,62 @@
 .addNewGame .cardTypeChosen {
   position: absolute;
   display: flex;
-  width: 400rpx;
+  width: 370rpx;
   height: 80rpx;
-  left: 20%;
+  left: 170rpx;
   flex-wrap: wrap;
-  top: 37%;
+  top: 121rpx;
 }
 .addNewGame .cardTypeChosen .cardType {
   flex: 1;
-  margin: 10px;
+  height: 80rpx;
+  margin-right: 10rpx;
 }
 .addNewGame .cardNumChosen {
   position: absolute;
   display: flex;
-  width: 400px;
-  height: 144px;
-  left: calc(50% - 208px);
+  width: 400rpx;
+  height: 120rpx;
+  left: 184rpx;
   flex-wrap: wrap;
-  top: calc(50% - 60px);
+  top: 106rpx;
 }
 .addNewGame .cardNumChosen .cardNum {
-  width: 40px;
-  height: 55px;
-  margin: 5px;
+  width: 35rpx;
+  height: 50rpx;
+  margin-right: 15rpx;
   text-align: center;
-  line-height: 60px;
+  line-height: 50rpx;
   border: 1px solid #000;
 }
 .addNewGame .cardNumChosen .cardNum8 {
-  margin-left: 30px;
+  margin-left: 25rpx;
 }
 .addNewGame .cardNumChosen .exiled {
   border: none;
   color: transparent;
   cursor: default;
+}
+.addNewGame .movableArea {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.addNewGame .movableArea .detailDialog {
+  height: 200rpx;
+  width: 400rpx;
+  border: 1px solid #000;
+  background: rgba(1, 2, 3, 0.7);
+}
+.addNewGame .movableArea .detailDialog .detailHeader {
+  display: flex;
+  color: aliceblue;
+}
+.addNewGame .movableArea .detailDialog .detailHeader .title {
+  width: calc(100% - 16rpx);
+}
+.addNewGame .movableArea .detailDialog .detailHeader .close {
+  width: 14rpx;
 }
 .addNewGame .operationBar {
   position: absolute;

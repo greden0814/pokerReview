@@ -1,7 +1,7 @@
 <template>
 	<view class="addNewGame">
 		<view class="table" :style="'height:'+ windowHeight + 'px;width:' + screenWidth + 'px'">
-			<view class="seat" :class="'seat' + player.seat" v-for="player in players" :key="player.seat">
+			<view class="seat" :class="'seat' + player.seat" v-for="player in players" :key="player.seat" :disabled="player.seat === curPlayer">
 				<view class="cards" @click="setMoves">
 					<view class="card" :class="checkedSeat == '' + player.seat + idx ? 'isChecked' : ''" @click="setCard(player.seat,idx)" v-for="idx in [0,1]" :key="idx">
 						{{cardTypes(player.card[idx].type)}}{{player.card[idx].num}}</view>
@@ -9,16 +9,20 @@
 				<input class="chips" v-model="player.chip" type="number" placeholder="筹码数量" maxlength="8" v-if="step == 0" />
 				<view class="chips" v-else>{{player.chip}}</view>
 				<view class="isBB" v-if="player.seat == bbseat">bb</view>
+				<svg t="1679993952088" class="icon" v-show="player.seat === curPlayer" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1646" width="15" height="15"><path d="M722.773333 381.44a64 64 0 0 1 90.453334 90.453333l-252.970667 253.013334a68.266667 68.266667 0 0 1-96.512 0l-253.013333-253.013334a64 64 0 0 1 90.538666-90.453333L512 592.128l210.773333-210.773333z" fill="#111111" p-id="1647"></path></svg>
 			</view>
 		</view>
+		<!-- 花色选择弹窗 -->
 		<view class="cardTypeChosen" v-if="typeListVisible">
 			<cover-image class="cardType" v-for="item in [0,1,2,3]" :key="item" :src="`../../static/image/${item}.png`"
 				@click="choseType(item)"></cover-image>
 		</view>
+		<!-- 数字选择弹窗 -->
 		<view class="cardNumChosen" v-if="numListVisible">
 			<view class="cardNum" :class="'cardNum' + card.num + ' ' + card.exile" v-for="card in cardNumList"
 				:key="card.num" @click="choseNum(card.num,card.exile)">{{card.num}}</view>
 		</view>
+		<!-- 操作记录弹窗 -->
 		<movable-area :scale-area="true" class="movableArea" v-if="showDetail">
 			<movable-view direction="all" x="260rpx" y="100rpx" class="detailDialog">
 				<view class="detailHeader">
@@ -33,6 +37,7 @@
 			</movable-view>
 		</movable-area>
 		<view class="operationBar">
+			<button plain @click="setDefaultData">默认数据</button>
 			<button plain @click="checkMoves">查看记录</button>
 			<button plain @click="goFlop">配置翻牌</button>
 			<view style="color: red;font-size: 12px;" v-if="notFinish"> {{warningMsg}} </view>
@@ -42,6 +47,7 @@
 
 <script>
 	import data from "@/static/data/data.js"
+	import gameData from "@/static/data/gameData.js"
 	export default {
 		data() {
 			return {
@@ -49,6 +55,7 @@
 				bb: 100,
 				bbseat: null,
 				players: [],
+				curPlayer: 0,
 				perflop: [],
 				flop: [],
 				turn: [],
@@ -147,6 +154,7 @@
 					num: num
 				})
 				this.numListVisible = false
+				this.warningMsg = ""
 				this.choosingLock = false
 				this.checkedSeat = null
 			},
@@ -174,7 +182,9 @@
 			closeDetails() {
 				this.showDetail = false
 			},
-			
+			setDefaultData() {
+				this.players = gameData.players
+			},
 			goFlop() {
 				let playerCounts = 0
 				let notFinishMark = 0
@@ -199,7 +209,8 @@
 					this.warningMsg = ""
 					this.notFinish = false
 					this.step++
-					console.log(JSON.stringify(this.players));
+					this.curPlayer = 0
+					// console.table(this.players);
 					// uni.navigateTo({
 					// 	url: `/pages/flopPage/flopPage?num=${playerCounts}`
 					// })
@@ -228,6 +239,9 @@
 				height: 70rpx;
 				position: absolute;
 
+				.icon {
+					transform: translateX(31rpx) translateY(-80rpx);
+				}
 				.cards {
 					display: flex;
 					height: 50rpx;

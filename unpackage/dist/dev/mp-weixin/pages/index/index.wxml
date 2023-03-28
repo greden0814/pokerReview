@@ -1,1 +1,1 @@
-<view class="content"><navigator class="navi" url="../games/games">牌局回放</navigator></view>
+<view class="content"><navigator class="navi" url="../games/games">牌局回放</navigator><picker name id class="_select"><view value="1" class="_option">111111111111</view><view value="2" class="_option">222222222</view><view value="3" class="_option">33333333</view><view value="4" class="_option">44444444</view><view value="5" class="_option">5555555</view><view value="6" class="_option">666666666</view><view value="7" class="_option">77777</view></picker></view>

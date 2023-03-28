@@ -164,6 +164,7 @@
 			left: calc(50% - 100px);
 			flex-wrap: wrap;
 			top: calc(50% - 150px);
+			background-color: aliceblue;
 
 			.cardType {
 				width: 80px;
@@ -180,6 +181,7 @@
 			left: calc(50% - 93px);
 			flex-wrap: wrap;
 			top: calc(50% - 258px);
+			background-color: aliceblue;
 
 			.cardNum {
 				width: 40px;
